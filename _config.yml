@@ -24,7 +24,7 @@ theme: jekyll-text-theme
 ## => Language and Timezone
 ##############################
 lang: ko # the language of your site, default as "en"
-timezone: US/Alaska
+timezone:
 # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for the available values
 
 ## => Author and Social
@@ -50,7 +50,7 @@ author:
 
 ## => GitHub Repository (if the site is hosted by GitHub)
 ##############################
-repository: user_name/repo_name
+repository: kong9410/kong9410.github.io
 repository_tree: master
 
 ## => Paths
@@ -106,7 +106,7 @@ sharing:
 ## => Comments
 ##############################
 comments:
-  provider: false # false (default), "disqus", "gitalk", "valine", "custom"
+  provider: disqus # false (default), "disqus", "gitalk", "valine", "custom"
 
   ## Disqus
   disqus:
@@ -193,11 +193,11 @@ defaults:
     values:
       layout: article
       sharing: true
-      license: true
+      license: false
       aside:
         toc: true
       show_edit_on_github: true
-      show_subscribe: true
+      show_subscribe: false
       pageview: true
 
 ## => Plugins
