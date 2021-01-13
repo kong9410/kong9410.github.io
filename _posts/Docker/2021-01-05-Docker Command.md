@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 도커 명령어
 tags: Docker
 ---

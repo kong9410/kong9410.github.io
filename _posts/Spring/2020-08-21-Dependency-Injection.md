@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 의존관계 주입
 tags: Spring
 ---

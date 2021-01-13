@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 도커 이미지
 tags: Docker
 ---

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Driving Table
 tags: Database
 ---

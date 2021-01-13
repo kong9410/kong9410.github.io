@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 리눅스 컨테이너
 tags: Docker
 ---

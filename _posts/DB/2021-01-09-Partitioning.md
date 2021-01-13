@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 파티셔닝
 tags: Database
 ---

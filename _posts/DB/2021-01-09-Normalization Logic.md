@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 정규화 논리
 tags: Database
 ---
