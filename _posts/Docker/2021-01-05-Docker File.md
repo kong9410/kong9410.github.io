@@ -1,6 +1,6 @@
 ---
 title: 도커 파일
-tags: Docker
+tags: docker
 ---
 
 # 도커 파일(Dockerfile)

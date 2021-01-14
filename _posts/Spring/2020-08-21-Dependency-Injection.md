@@ -1,6 +1,6 @@
 ---
-title: 의존관계 주입
-tags: Spring
+title: 의존관계 주입(Dependency Injection)
+tags: spring
 ---
 
 # 의존관계 주입(Dependency Injection, DI)

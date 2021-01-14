@@ -1,6 +1,6 @@
 ---
 title: 도커 이미지
-tags: Docker
+tags: docker
 ---
 
 # 도커 이미지

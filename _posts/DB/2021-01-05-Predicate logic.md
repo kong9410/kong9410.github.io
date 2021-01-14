@@ -1,6 +1,6 @@
 ---
 title: 릴레이션의 연산과 술어 논리
-tags: Database
+tags: database
 ---
 
 # 릴레이션의 연산과 술어 논리

@@ -1,6 +1,6 @@
 ---
 title: 술어논리와 관계형 모델
-tags: Database
+tags: database
 ---
 
 # 술어논리와 관계형 모델

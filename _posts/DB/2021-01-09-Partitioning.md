@@ -1,6 +1,6 @@
 ---
 title: 파티셔닝
-tags: Database
+tags: database
 ---
 
 ## Partitioning
