@@ -1,6 +1,6 @@
 ---
 title: 개발에서 사용하는 서버 종류
-tags: web, server
+tags: web server
 ---
 
 ## Local

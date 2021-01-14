@@ -1,6 +1,6 @@
 ---
 title: 웹 애플리케이션 구조
-tags: web, spring
+tags: web spring
 ---
 
 # 1. 전통적인 클라이언트/서버 구조(2-tier)

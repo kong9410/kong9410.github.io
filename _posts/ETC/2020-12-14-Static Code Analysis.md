@@ -1,6 +1,6 @@
 ---
 title: 정적 분석(Static Analysis)
-tags: 정적분석, ci
+tags: 정적분석 ci
 ---
 
 # 정적 분석
