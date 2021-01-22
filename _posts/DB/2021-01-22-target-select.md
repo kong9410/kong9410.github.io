@@ -51,7 +51,7 @@ WHERE department = '관계형 모델'
 
 COUNT 연산시 WHERE 절의 조건에 일치하는 행이 없다면, 결과가 COUNT와 그 이외의 집계함수가 다르다. 예를 들어 존재하지 않는 행에 대한 집계연산은 어떻게 표현되는지 확인해보자
 
-```SQL
+```sql
 SELECT AVG(age) FROM students WHERE grade = 5
 ```
 
@@ -71,7 +71,7 @@ GROUP BY department
 
 이 쿼리는 학과별로 학생의 수를 집계하고 있다. 이때 소속 인원이 30명 이하인 학과의 목록과 학생수가 필요하다고 하면 쿼리는 다음과 같다
 
-```SQL
+```sql
 SELECT department, COUNT(*)
 FROM students
 GROUP BY department
@@ -101,7 +101,7 @@ WHERE 절의 검색 조건에 일치하지 않으면 행에 대한 집계도 필
 
 만일 집계된 것을 수치 순으로 정렬 시키고 싶으면 다음과 같이 ORDER BY를 사용할 수 있다
 
-```SQL
+```sql
 SELECT department, COUNT(*)
 FROM students
 GROUP BY department
@@ -134,7 +134,7 @@ WHERE (department, course) IN (
 
 테이블 서브쿼리는 FROM 절의 서브쿼리로 사용하는 경우다. 이경우 결과를 FROM 절에서 일반 테이블로 다루고 SELECT에 따라서 추가 연산을 하거나 JOIN하는 식으로 사용한다.
 
-```SQL
+```sql
 SELECT AVG(c)
 FROM (
 	SELECT COUNT(*) AS c
@@ -161,7 +161,7 @@ WHERE NOT EXISTS (
 
 스칼라 서브쿼리는 스칼라값이 나오는 다양한 곳에서 사용할 수 있다. 예를 들어 스칼라 서브쿼리는 WHERE 절이나 HAVING 절 등에서 스칼라값과 비교하거나 SELECT LIST에서 스칼라값을 구하는 등의 목적으로 사용한다.
 
-```SQL
+```sql
 SELECT name, age
 FROM students s1
 WHERE age = (
@@ -265,7 +265,7 @@ DB 응용 프로그램을 개발하거나 유지보수를 할 때 자신이 작�
 - FROM 절의 테이블 목록, WHERE 절의 검색 조건 목록은 한 줄씩 작성한다.
 - 서브쿼리의 괄호는 각각 한 줄로 작성한다.
 
-```SQL
+```sql
 SELECT
   department,
   (
