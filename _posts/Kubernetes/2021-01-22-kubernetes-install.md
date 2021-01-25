@@ -32,17 +32,12 @@ tags: kubernetes gcp linux
    ```
 
 3. ```shell
-   
+     apt-get install apt-transport-https ca-certificates curl software-properties-common -y
    ```
-  # docker 설치 위한 라이브러리 설치
-  apt-get install apt-transport-https ca-certificates curl software-properties-common -y```
-  ```
-
 4. ```shell
    # gpg key 내려받기
    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-  ```
-
+   ```
 5. ```shell
    # 패키지 관리도구에 도커 다운로드 링크 추가
    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -91,12 +86,11 @@ tags: kubernetes gcp linux
 1. ```shell 
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
     ```
-  ```
 
 2. ```shell
    cat <<EOF | tee /etc/apt/sources.list.d/kubernetes.list deb https://apt.kubernetes.io/ kubernetes-xenial main
    EOF
-  ```
+   ```
 
 3. ```shell
    apt-get update
@@ -182,4 +176,4 @@ kubectl get nodes
 
 ### 출처
 
-[쿠버네티스(kubernetes) 설치 및 환경 구성하기. How to configure a Kubernetes cluster | by ShinChul Bang | FINDA 기술블로그 | Medium](https://medium.com/finda-tech/overview-8d169b2a54ff)
+[쿠버네티스(kubernetes) 설치 및 환경 구성하기. How to configure a Kubernetes cluster \| by ShinChul Bang \| FINDA 기술블로그 \| Medium](https://medium.com/finda-tech/overview-8d169b2a54ff)
