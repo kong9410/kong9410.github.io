@@ -21,7 +21,7 @@ tags: database
 
 인덱스는 테이블 컬럼 값과 ROWID를 가지고 있다. 원하는 데이터를 찾을 때 인덱스에서 값을 찾은 후 ROWID를 통해 테이블에 접근한다.
 
-![img](http://wiki.gurubee.net/download/attachments/29065492/%EC%9D%B8%EB%8D%B1%EC%8A%A4%EA%B8%B0%EB%B3%B8%EA%B5%AC%EC%A1%B0.JPG)
+![img](./index-structure.jpeg)
 
 - 인덱스는 블록 구조로 되어 있음
 - 브랜치 블록(root block): 하위 블록을 찾기위한 데이터 블록 주소를 가지고 있다.
@@ -83,7 +83,7 @@ WHERE EMPLOYEE_ID = 145;
 
 ### Index Range Scan
 
-![img](http://www.dbguide.net/publishing/img/knowledge/SQL_331.jpg)
+![img](SQL_331.jpg)
 
 - 인덱스 스캔 후 RowId로 테이블을 액세스한다.
 - Single Block I/O, Random Access I/OO
@@ -102,14 +102,14 @@ ORDER BY SALARY;
 
 ### Index Full Scan
 
-![img](http://www.dbguide.net/publishing/img/knowledge/SQL_332.jpg)
+![img](./SQL_332.jpg)
 
 - 인덱스 범위 스캔과 동일 매커니즘
 - Leaf Node의 최초 값에서 마지막까지 차례로 읽는다
 - 힌트로 제어할 수 없음
 - Table Full Scan보다 적은 Index에서 필터시 유용
 
-![img](http://www.dbguide.net/publishing/img/knowledge/SQL_333.jpg)
+![img](SQL_333.jpg)
 
 
 
@@ -125,7 +125,7 @@ ORDER BY SALARY;
 
 ### Index Skip Scan
 
-![img](http://www.dbguide.net/publishing/img/knowledge/SQL_336.jpg)
+![img](SQL_336.jpg)
 
 - Index Key의 선행 컬럼이 조건절에 없는 경우에 사용
 - 선행 컬럼의 Distinct Count가 낮을때만 사용이 권장
@@ -135,7 +135,7 @@ ORDER BY SALARY;
 
 ### Index Scan
 
-![img](http://www.dbguide.net/publishing/img/knowledge/SQL_335.jpg)
+![img](SQL_335.jpg)
 
 - 인덱스를 경유해서 테이블을 랜덤 액세스한다
 - 인덱스의 데이터는 정렬되어 있음
