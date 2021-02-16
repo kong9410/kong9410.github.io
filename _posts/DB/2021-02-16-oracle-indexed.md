@@ -83,7 +83,7 @@ WHERE EMPLOYEE_ID = 145;
 
 ### Index Range Scan
 
-![img](SQL_331.jpg)
+![SQL_331.jpg](https://github.com/kong9410/kong9410.github.io/blob/main/_posts/DB/SQL_331.jpg?raw=true)
 
 - 인덱스 스캔 후 RowId로 테이블을 액세스한다.
 - Single Block I/O, Random Access I/OO
