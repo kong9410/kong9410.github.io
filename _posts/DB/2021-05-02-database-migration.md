@@ -151,7 +151,7 @@ tags: oracle database
 
 ## 원문
 
-[데이터베이스 마이그레이션: 개념 및 원칙(1부)  | 클라우드 아키텍처 센터  | Google Cloud](https://cloud.google.com/architecture/database-migration-concepts-principles-part-1?hl=ko)
+[데이터베이스 마이그레이션: 개념 및 원칙(1부)](https://cloud.google.com/architecture/database-migration-concepts-principles-part-1?hl=ko)
 
-[데이터베이스 마이그레이션: 개념 및 원칙(2부)  | 클라우드 아키텍처 센터  | Google Cloud](https://cloud.google.com/architecture/database-migration-concepts-principles-part-2?hl=ko)
+[데이터베이스 마이그레이션: 개념 및 원칙(2부)](https://cloud.google.com/architecture/database-migration-concepts-principles-part-2?hl=ko)
 
