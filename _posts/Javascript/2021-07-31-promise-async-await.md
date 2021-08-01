@@ -92,5 +92,5 @@ const worldAndPromise = async () => {
 worldAndPromise();
 ```
 
-`helloWorld`는 2초 뒤에 실행이 되고, `helloPromise`는 1초뒤에 실행이되는 코드다. 하지만 `await`를 사용함으로써 promise객체가 이행될때까지 기다리게 되어 결과적으로 2초 뒤에 `twoSeconds`와 `oneSeconds` 가 동시에 출력되게 된다.
+`helloWorld`는 2초 뒤에 실행이 되고, `helloPromise`는 1초뒤에 실행이되는 코드다. `Promise`를 반환해서 `async`가 될것같지만 `await`를 사용함으로 `async function`이 실행되는 동안 pending이 되는 것을 알 수 있다. 때문에 `oneSeconds`는 `twoSeconds`이후 1초 뒤에 출력이 된다.
 
