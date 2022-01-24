@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Object클래스의 equals와 hashCode
 tags: java
 ---

@@ -1,4 +1,5 @@
 ---
+layout: post
 title: 웹 애플리케이션 구조
 tags: web spring
 ---

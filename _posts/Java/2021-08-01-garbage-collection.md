@@ -1,4 +1,5 @@
 ---
+layout: post
 title: 가비지 컬렉션(Garbage Collection, GC)
 tags: java
 ---
@@ -136,22 +137,22 @@ GC 대상은 Young, Old Generation, Permanent Area이다. Young Generation에서
 >
 > HotSpot JVM - Server: 죽은 코드 삭제, loop 변수 끌어올리기, 공통 부분식 제거, 상수 지연, 전역 코드 이동등 최적화를 한다.
 
-| 옵션                              | 상세설명                                                     |
-| --------------------------------- | ------------------------------------------------------------ |
-| -Client                           | Client Hotspot VM으로 구동한다.                              |
-| -Server                           | Server Hostpot VM으로 구동한다.                              |
-| -Xms\<Size\><br />-Xmx\<Size\>    | Young Generation의 최소, 최대 크기                           |
-| -XX: PermSize                     | Permanent Area의 초기 크기                                   |
-| -Xss\<Size\>                      | Stack 사이즈                                                 |
-| -XX:MaxPermSize                   | Permanent Area의 최대 크기 (디폴트=64mb)                     |
+| 옵션                                | 상세설명                                     |
+| --------------------------------- | ---------------------------------------- |
+| -Client                           | Client Hotspot VM으로 구동한다.                |
+| -Server                           | Server Hostpot VM으로 구동한다.                |
+| -Xms\<Size\><br />-Xmx\<Size\>    | Young Generation의 최소, 최대 크기              |
+| -XX: PermSize                     | Permanent Area의 초기 크기                    |
+| -Xss\<Size\>                      | Stack 사이즈                                |
+| -XX:MaxPermSize                   | Permanent Area의 최대 크기 (디폴트=64mb)         |
 | -XX:TargetSurvivorRadio=\<value\> | Survivor Area가 지정된 값%만큼 차면 Minor GC가 발생한다. (디폴트=50) |
 | -XX: MinHeapFreeRadio=\<percent\> | 전체 Heap 대비 Free Space가 지정수치 이상이면 -Xmx까지 확장(디폴트=40) |
 | -XX: MaxHeapFreeRatio=\<percent\> | 전체 Heap 대비 Free Space가 지정수치 이상이면 -Xms까지 축소(디폴트=70) |
 
 다음은 Java8 이후 변경된 옵션
 
-| 옵션                 | 상세                       |
-| -------------------- | -------------------------- |
+| 옵션                   | 상세                    |
+| -------------------- | --------------------- |
 | -XX:MaxMetaspaceSize | -XX:MaxPermSize에서 변경됨 |
 | -XX:MetaspaceSize    | -XX:PermSize에서 변경됨    |
 

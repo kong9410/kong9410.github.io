@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Promise, Async, Await
 tags: javascript
 ---

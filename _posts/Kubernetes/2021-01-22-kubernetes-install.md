@@ -1,6 +1,7 @@
 ---
+layout: post
 title: 쿠버네티스 설치
-tags: kubernetes gcp linux
+tags: kubernetes linux
 ---
 
 # 쿠버네티스 설치
@@ -33,6 +34,7 @@ tags: kubernetes gcp linux
 
 3. ```shell
      apt-get install apt-transport-https ca-certificates curl software-properties-common -y
+     ```
    ```
 4. ```shell
    # gpg key 내려받기
@@ -154,7 +156,7 @@ tags: kubernetes gcp linux
 
    ```shell
    kubectl get nodes
-   
+
    kubectl get pod --namespace=kube-system -o wide
    ```
 

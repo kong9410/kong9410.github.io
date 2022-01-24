@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Object 클래스
 tags: java
 ---

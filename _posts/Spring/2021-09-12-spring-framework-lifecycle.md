@@ -1,4 +1,5 @@
 ---
+layout: post
 title: 스프링 라이프사이클
 tags: java spring
 ---

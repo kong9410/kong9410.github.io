@@ -1,4 +1,5 @@
 ---
+layout: post
 title: 흐름/혼잡/오류 제어
 tags: network
 ---

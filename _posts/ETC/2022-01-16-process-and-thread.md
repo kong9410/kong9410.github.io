@@ -1,5 +1,6 @@
 ---
-title: difference between process and thread
+layout: post
+title: 프로세스와 스레드 차이
 tags: cs
 ---
 
