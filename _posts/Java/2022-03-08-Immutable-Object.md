@@ -138,20 +138,11 @@ public final class ParentObject {}
 public class ChildObject extends ParentObject {} // compile error
 ```
 
-## setter를 지양해야 하는 이유
-
-`setter`를 지양해야 한다는 말은 많이 들어봤지만 어떠한 이유 때문일까? 위에서 설명한 것과 합쳐서 다음과 같은 이유가 있다고 볼 수 있다.
-
-1. 객체의 일관성이 없다
-   - 객체 내부의 값이 언제든지 수정될 수 있기 때문에 의도치 않은 변경이 생길 수 밖에 없다.
-   - 의도치 않은 변경은 개발자가 프로그램을 예측할 수 없게 만들어 버린다.
-2. 의도를 알 수 없다.
-   - 객체를 처음 생성할 때 set을 모아두면 개발자들은 "아 객체를 생성하고 값을 초기화 하는구나"라고 의도를 어느정도 파악할 수는 있다.
-   - 그러나 어떤 메소드에서 뚝하고 `setField1("a")`가 생겨났을 경우에는 이 `set`을 왜 사용하는지 그 의도를 파악하기 힘들다.
-
 ## 객체를 생성하는 방법
 
 객체를 생성하는 패턴은 3가지가 있다. *점층적 생성자 패턴* , *자바빈 패턴*, *빌더 패턴* 이 있다.
+
+그 중에 필드를 final로 가질 수 있는 것은 점층적 생성자 패턴과 빌더 패턴이 있다.
 
 ### 점층적 생성자 패턴
 
@@ -181,7 +172,22 @@ public class Student {
 
 ### 자바빈 패턴
 
-여지껏 이야기한 `setter`를 통해서 생성하는 방법이다. 일관성을 유지하기가 힘들다. `setter`를 지양해야하는 이유를 위에서 써놨기 때문에 따로 설명하지 않겠다.
+여지껏 이야기한 `setter`를 통해서 생성하는 방법이다. 일관성을 유지하기가 힘들다. 또한 인스턴스 생성과 동시에 초기화가 되는 것이 아니기 때문에 필드를 `final`로 선언할 수 없다.
+
+```java
+public class Student {
+  private String name;
+  private int age;
+  
+  public void setName(String name) {
+    this.name = name;
+  }
+  
+  public void setAge(int age) {
+    this.age = age;
+  }
+}
+```
 
 ### 빌더 패턴
 
@@ -189,11 +195,22 @@ public class Student {
 
 ```java
 public class Student {
-  /* 필드 */
-  public Student(/* 필드 인자들 */) {this.필드 = 인자필드;}
+  private final String name;
+  private final int age;
+  
+  public Student(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }
+  
+  public static StudentBuilder builder() {
+    return new StudentBuilder();
+  }
   
   public static class StudentBuilder {
-    /* 필드 */
+    private String name;
+    private int age;
+    
     public StudentBuilder name(String name) {
       this.name = name;
     }
@@ -201,8 +218,6 @@ public class Student {
     public StudentBuilder age(int age) {
       this.age = age;
     }
-    
-    /*...*/
     
     public Student build() {
       return new Student(this.name, this.age, /*...*/);
@@ -212,10 +227,9 @@ public class Student {
 
 public class Main {
   public static void main(String[] args) {
-    Student student = new Student.StudentBuilder()
+    Student student = Student.builder()
       .name("홍길동")
       .age(12)
-      /*...*/
       .build();
   }
 }
@@ -241,6 +255,17 @@ public class Student {
 >mybatis는 기본생성자만 있으면 값을 초기화 세팅할 수 있다.
 >
 >myBatis는 `getter`, `setter` 없이도 `private` 필드에 값을 세팅할 수가 있는데 `Reflector` 클래스를 이용해 resultType의 클래스에 대한 필드정보와 `getter`/`setter` 매핑 정보를 만들어두고 이를 통해 바인딩시 해당 메소드를 만들어 필드값을 바인딩 해준다.
+
+## setter를 지양해야 하는 이유
+
+`setter`를 지양해야 한다는 말은 많이 들어봤지만 어떠한 이유 때문일까? 위에서 설명한 것과 합쳐서 다음과 같은 이유가 있다고 볼 수 있다.
+
+1. 객체의 일관성이 없다
+   - 객체 내부의 값이 언제든지 수정될 수 있기 때문에 의도치 않은 변경이 생길 수 밖에 없다.
+   - 의도치 않은 변경은 개발자가 프로그램을 예측할 수 없게 만들어 버린다.
+2. 의도를 알 수 없다.
+   - 객체를 처음 생성할 때 set을 모아두면 개발자들은 "아 객체를 생성하고 값을 초기화 하는구나"라고 의도를 어느정도 파악할 수는 있다.
+   - 그러나 어떤 메소드에서 뚝하고 `setField1("a")`가 생겨났을 경우에는 이 `set`을 왜 사용하는지 그 의도를 파악하기 힘들다.
 
 ## 그럼에도 불구하고 가변객체(setter 등)를 사용해야 할 때
 
