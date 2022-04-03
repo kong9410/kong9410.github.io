@@ -15,7 +15,7 @@ description: 불변 객체가 무엇이고 어떨 때 사용하는 것인가?
 
 작업을 했던 코드는 모든 필드에 `setter` 메소드가 있는 가변 객체가 선언되어 있었다. 메소드 수 뿐만 아니라 뎁스도 꽤 깊기 때문에 코드 파악하는 것 자체도 오래걸리는 코드였다. 
 
-여기서 내가 수정해야 하는 것은 `field3`이 "A"라면 `field4`는 "B"로 세팅하도록 변경을 해야했다. 
+여기서 내가 수정해야 하는 것은 `field3`가 "A"라면 `field4`는 "B"로 세팅하도록 변경을 해야했다. 
 
 `field3`가 세팅이 안되면 로직이 돌지가 않기 때문에 `field3`가 어디서 set이 되는지 메소드 처음부터 찾아봐야 했다. 꽤나 오랫동안 코드를 쳐다보았고 어디서 어떤 값을 set을 하는지 찾아냈다. 그러나 `field3`의 set이 한번만 일어날 것이라는 보장이 없다. 중간에 값이 또 바뀔지도 모르는 불안감에 변경하려는 로직 이전까지의 `field3` set을 계속 추적했다. `field3`의 값 변경을 다 확인하고 `field4`를 변경하는 로직을 작성했다. 그러나 이 이후의 로직에서 `field4`의 값이 변경됨으로써 어떤 사이드 이펙트가 있는지 모르기 때문에 나머지 로직도 파악을 해야만했다. if 하나만을 사용하는 간단한 로직 변경인데 불안감에 휩싸일 수 밖에 없는 코드 수정이 벌어졌었다.
 
@@ -137,6 +137,54 @@ public final class ParentObject {}
 
 public class ChildObject extends ParentObject {} // compile error
 ```
+
+### Collection을 불변으로 사용하는 법
+
+`String`과 같은 클래스의 경우는 메소드를 방어적 복사를 사용해서 제공하기 때문에 불변으로 사용시에 문제가 되지 않는다. 그러나 `List`나 `Map`, `Set`등의 Collection류의 클래스들은 아무리 필드를 `final`로 선언을 한들 `add`나 `put`과 같은 메소드를 사용하면 가변적인 요소가 될 수 밖에 없다. 그렇다고 매번 방어적복사와 같은 방법의 메소드를 만드는 비용도 적게 들지 않는다. 이럴때 사용할 수 있는 것이 있는데 구글에서 제공하는 Guava 라이브러리를 사용할 수가 있고 ` Java9` 이상에서는 `List` 인터페이스의 `of` 메소드가 있다.
+
+#### Guava
+
+Guava라이브러리는 다양한 Collection 인터페이스들의 구현체를 제공하는데 대표적으로 `ImmutableList`, `ImmutableSet`, `ImmutableMap` 등이 있다.
+
+```java
+List<String> immutableList = ImmutableList.of("홍길동", "고길동", "둘리");
+```
+
+```java
+Map<String, String> immutableMap = ImmutableMap.builder()
+  .put("홍길동", "1")
+  .put("고길동", "2")
+  .put("둘리", "3")
+  .build();
+```
+
+```java
+Set<String> immutableSet = ImmutableSet.builder()
+  .put("홍길동")
+  .put("고길동")
+  .put("둘리")
+  .build();
+```
+
+Guava에서 제공하는 불변 객체들은 모두 최초 생성시에만 필드 값들이 정해지며 이후에는 값이 수정되지 않는다.
+
+#### Java9
+
+Java9 부터는 `List`, `Map`, `Set`에 `of()` 메소드가 추가되었다.
+
+```java
+List<String> immutableList = List.of("홍길동", "고길동", "둘리");
+```
+
+```java
+Map<String, String> immutableMap = Map.of("홍길동", "1", "고길동", "2", "둘리", "3");
+```
+
+```java
+Set<String> immutableSet = Set.of("홍길동", "고길동", "둘리");
+```
+
+guava와 마찬가지로 최초 생성 이후에는 값을 변화시킬 수 없다.
 
 ## 객체를 생성하는 방법
 
@@ -319,7 +367,9 @@ public class Student {
 
 ## 출처
 
-[Immutable Objects in Java | Baeldung](https://www.baeldung.com/java-immutable-object)
+[불변객체 - 위키백과, 우리 모두의 백과사전 (wikipedia.org)](https://ko.wikipedia.org/wiki/%EB%B6%88%EB%B3%80%EA%B0%9D%EC%B2%B4)
+
+[Immutable Objects in Java \| Baeldung](https://www.baeldung.com/java-immutable-object)
 
 [[Java\] 불변 객체(Immutable Object) 및 final을 사용해야 하는 이유 - MangKyu's Diary (tistory.com)](https://mangkyu.tistory.com/131)
 
@@ -330,3 +380,11 @@ public class Student {
 [MyBatis가 setter/getter를 찾는 방법 | Jasper Ra66it (jasper-rabbit.github.io)](https://jasper-rabbit.github.io/posts/mybatis-refector/)
 
 [더티 체킹 (Dirty Checking)이란? (tistory.com)](https://jojoldu.tistory.com/415)
+
+[Java9의 불변 컬렉션 생성 \| Engineering Blog by Dale Seo](https://www.daleseo.com/java9-immutable-collections/)
+
+[ImmutableSet (Guava: Google Core Libraries for Java 19.0 API)](https://guava.dev/releases/19.0/api/docs/com/google/common/collect/ImmutableSet.html)
+
+[ImmutableList (Guava: Google Core Libraries for Java 19.0 API)](https://guava.dev/releases/19.0/api/docs/com/google/common/collect/ImmutableList.html)
+
+[ImmutableMap (Guava: Google Core Libraries for Java 23.0 API)](https://guava.dev/releases/23.0/api/docs/com/google/common/collect/ImmutableMap.html)
