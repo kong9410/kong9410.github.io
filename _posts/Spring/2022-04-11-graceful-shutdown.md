@@ -13,7 +13,7 @@ description: 스프링 애플리케이션을 안전하게 종료시키는 방법
 
 리눅스 환경에서 프로세스를 종료하는 방법은 `kill` 명령어이다. 조금 더 정확히 말하자면 프로세스에 시그널을 보내는 명령어이다. `kill` 명령어는 `kill {options} <pid>`와 같은 방법으로 사용할 수 있다. 시그널 종류는 다음과 같은 것들이 있다.
 
-![What all signals you can send using kill](https://www.howtoforge.com/images/usage_of_pfsense_to_block_dos_attack_/kill-l-option.png?ezimgfmt=rs:500x165/rscb5/ng:webp/ngcb5)
+![kill-l-option](https://user-images.githubusercontent.com/37204770/162863518-0e16838f-8f90-4a6f-903e-87832e261905.jpg)
 
 이중에 OS에서 강제적으로 종료시킬 수 있는 시그널은 `9(SIGKILL)` 시그널이다. `kill -9 [pid]`입력하면 현재 실행중인 프로세스가 애플리케이션 종료 절차를 진행하지 않고 강제적으로 종료가 된다.
 
