@@ -25,5 +25,7 @@ assertNotEquals(c, d); // true
 
 반면 `new` 연산자로 생성한 String은 Java Heap 영역에 새로운 String 객체로 생성된다. s1과 s3는 서로 다른 reference를 갖고 있기 때문에 서로 같지 않다는 결론이 나온다.
 
+## 원문
 
+[String Constant Pool이란? | Java String Pool (tistory.com)](https://starkying.tistory.com/entry/what-is-java-string-pool)
 
