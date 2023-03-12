@@ -37,7 +37,7 @@ RAC로 연결된 N개의 Instance에서 동일한 Datafile을 공유하여 엑�
 
 ## Oracle RAC 구성요소
 
-[image.png](https://user-images.githubusercontent.com/37204770/224528612-6c9fcddb-63a5-42ad-9edc-2b4d6f1517e5.png)
+![image.png](https://user-images.githubusercontent.com/37204770/224528612-6c9fcddb-63a5-42ad-9edc-2b4d6f1517e5.png)
 
 Grid Infrastructure에서 제공하는 oracle clusterware의 기반하에 여러 database 서버를 묶어서 하나의 시스템 처럼 동작하도록 지원한다.
 
