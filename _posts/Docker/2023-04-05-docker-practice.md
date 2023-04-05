@@ -97,7 +97,7 @@ $ docker ps -a
 
 ```shell
 $ docker run -d -p 80:80 --rm --name mincheol-nginx nginx:latest
-```
+d```
 
 생성이 되었는지 확인한다
 
@@ -295,8 +295,7 @@ $ ls
 우선은 도커파일을 만들고 실행할 폴더를 만든다
 
 ```shell
-$ docker mkdir mincheol-dockerfile && cd mincheol-dockerfile
-```
+$ docker mkdir mincheol-dockerfile && cd mincheol-dockerfile/
 
 그리고 도커파일을 작성한다. 도커파일 빌드옵션을 특별히 주지않는한 디폴트 파일명은 `Dockerfile`이다
 
@@ -407,15 +406,52 @@ $ curl "http://localhost:8083/test?name=hello"
 
 `docker-compose.yml`을 작성학 각각 독립된 컨테이너의 실행 정의를 실시한다
 
-```yaml
-web:
-  build: .
-  ports:
-    - "5000:5000"
-  volumes:
-    - .:/code
-  links:
-    - redis
-redis:
-  image: redis
+```dockerfile
+# 빌드를 위한 Base 이미지 지정. 이미지에 builder 별칭 지정 
+FROM maven:eclipse-temurin AS builder
+
+WORKDIR /usr/src/
+# /usr/src 하위에 guestbook-demo 프로젝트 clone 받음
+RUN git clone -b dev https://yung3k7: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@oss.navercorp.com/yung3k7/guestbook-demo.git
+WORKDIR /usr/src/guestbook-demo
+# /usr/src/guestbook-demo 내에서 메이븐 빌드 수행
+RUN mvn clean package
+
+# 배포를 위한 베이스 이미지 지정
+FROM openjdk:17-jdk-alpine3.13
+WORKDIR /app
+# builder 이미지의 /usr/src/guestbook-demo/target/guestbook-demo-0.0.1-SNAPSHOT.jar 파일을 배포 이미지의 ./app.jar 로 가져온다.
+COPY --from=builder /usr/src/guestbook-demo/target/guestbook-demo-0.0.1-SNAPSHOT.jar ./app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/app/app.jar"]
 ```
+
+```yaml
+version: "3"
+
+services:
+  mysql:
+    image: mysql:8.0 # Base 이미지
+    container_name: mysql # 컨테이너 이름 설정
+    ports: # 호스트와 포트 매핑
+      - 3306:3306
+    environment: # 환경변수 정의
+      MYSQL_ROOT_PASSWORD: test123 # MySQL 컨테이너의 root 비밀번호 지정
+    command: # dockerfile 의 CMD 구문과 같다. mysql:8.0 이미지는 docker-entrypoint.sh 스크립트 파일 실행이 Entrypoint 이므로, command 에 지정해주는 값들은 docker-entrypoint.sh 스크립트 파일의 옵션이 된다.
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes: # 도커 볼륨 설정. <호스트 디렉토리>:<컨테이너 디렉토리> 와 같이 호스트 디렉토리와 컨테이너 디렉토리를 매핑.
+      - /home/irteam/practice/jys/mysql/data:/var/lib/mysql # mysql 컨테이너의 /var/lib/mysql 디렉토리 하위에 실제 데이터들이 저장되는데, 해당 데이터들을 호스트에도 저장한다. 컨테이너를 사용하면서 영속성을 보장할 수 있다.
+      - /home/irteam/practice/jys/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql # 컨테이너가 처음 생성될 경우 실행될 init.sql 파일을 volume을 통해 컨테이너에 전달하여 실행할 수 있도록 한다.
+
+  guestbook:
+    container_name: guestbook
+    build: . # 현재 디렉토리의 Dockerfile 로 이미지 빌드.
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql # mysql 컨테이너를 먼저 실행할 것을 보장한다.
+```
+
+
+http://10.168.144.145:8080/guestbook/main
