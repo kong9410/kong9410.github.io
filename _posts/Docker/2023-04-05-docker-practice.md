@@ -452,6 +452,3 @@ services:
     depends_on:
       - mysql # mysql 컨테이너를 먼저 실행할 것을 보장한다.
 ```
-
-
-http://10.168.144.145:8080/guestbook/main
