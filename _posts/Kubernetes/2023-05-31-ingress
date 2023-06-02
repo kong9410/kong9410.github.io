@@ -1,0 +1,75 @@
+---
+title: kuberentes ingress
+tags: kubernetes
+layout: post
+description: kubernetes ingress
+---
+
+# kubernetes ingress
+
+- 일반적으로 네트워크 트래픽은 ingress와 egress로 구성된다(egress는 잘 안쓴다고 한다)
+- ingress는 쿠버네티스에서 제공하는 리소스 오브젝트이다
+- ingress는 서버 내부로 유입되는 네트워크 트래픽을 의미한다
+- ingress는 외부에서 들어오는 요청을 어떻게 처리할지 결정한다
+- 쿠버네티스에서 실행중인 Deployment와 Service에 접근하기 위한 일종의 Gateway 역할을 한다
+- Ingress를 사용하지 않으면 NodePort와 External Ip등이 있다
+> NodePort와 External Ip는 L4 에서 요청을 처리하기 때문에 세부적인 로직 구현이 어렵다
+- Ingress는 L7 에서 요청을 처리할 수가 있다
+- 로드밸런싱, TLS/SSL 인증서 처리, 특정 경로 HTTP 라우팅 처리 등을 할 수가 있다
+- 이처럼 요청에 대해 어떻게 처리할 것인지에 대해 Ingress에 정의한 이후 Ingress Controller라는 웹 서버에 적용시키고 추상화 단계에서 서비스 처리 로직을 정의할 수 있다.
+- Ingress 요청을 처리하기 위한 Service 로는 일반적인 클라우드 플랫폼에서는 Load Balancer타입의 Service가 있다
+
+## Ingress Yaml
+```yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: alicek106.com
+    http:
+      paths:
+      - path: /api/hostname-service
+        backend:
+          serviceName: hostname-service
+          servicePort: 80
+```
+위의 yaml은 다음과 같은 뜻을 가지고 있다
+1. host가 alicek106.com 으로 요청이 들어온다면
+2. http 프로토콜을 통해서
+3. 경로가 /api/hostname-service인 요청에 대해서는
+4. service이름이 hostname-service 이름의 Service에 80 포트로 요청을 넘긴다
+
+위 yaml은 ingress 오브젝트에 대한 정의일 뿐 실제로 오브젝트를 생성해도 아무일이 일어나지 않는다. ingress는 ingress controller 위에 적용시켜야 동작하기 때문이다. ingress controller가 외부에서 요청을 수신했을 때 ingress 룰이 적용된다.
+
+[image:E3C04F6E-A54F-4A0F-A1F3-1D88DB0E1F1D-3257-0000092642722832/스크린샷_2019-04-01_오후_1.51.46.png]
+Ingress Controller는 직접 만들 수도 있고 클라우드 플랫폼 환경이라면 플랫폼에게 위임할 수도 있다. Nginx Ingress Controller 를 사용할 수 있고 GKE를 사용한다면 플랫폼에 위임할 수도 있다.
+직접 Ingress Controller를 생성할 시에는 Nginx Ingress Controller의 경우 보통 오픈소스를 사용할텐데 nginx의 경우 deployment만 있고 외부로 노출하기 위한 service는 생성되어 있지 않다.  Ingress 규칙을 /hostname-service의 Endpoint를 제공하기 위해서는 별도의 Service를 생성해 주어야 한다
+
+정의되지 않은 경로에 대해서는 플랫폼이나 nginx ingress controller에서 각기 처리하는 방식이 있다. 만약 커스텀하게 사용하고 싶다면 nginx의 경우에는 nginx ingress controller를 실행하는 yaml 파일을 열어서 디폴트 옵션을 추가하면 된다.
+
+## NodePort
+- 온 프레미스 환경에서는 LoadBalancer를 사용할 수 없다. 
+- 다른 종류의 서비스를 사용해야 하는데 가장 간단한 것이 NodePort이다.
+- NodePort는 모든 워커 노드에 동일한 포트를 열고 워커 노드의 ip와 NodePort의 포트로 Ingress Controller에 접근할 수 있다
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingress-nginx
+  namespace: ingress-nginx
+spec:
+  ports:
+  - name: service
+    port: 80
+    targetPort: 80
+    nodePort: 30000
+  selector:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  type: NodePort
+```
+이 후 외부에서 worker ip(혹은 hostname)과 30000번 포트를 사용하여 접근하면 정상적인 응답이 올 수가 있다
