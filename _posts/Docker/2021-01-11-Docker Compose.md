@@ -1,6 +1,8 @@
 ---
 title: 도커 컴포즈(Docker Compose)
 tags: docker
+layout: post
+description: 여러 컨테이너를 한번에 생성해주는 도커 컴포즈에 대해 정리
 ---
 
 # 도커 컴포즈
@@ -227,7 +229,7 @@ services:
         - "8081-8085"
         - "80:80"
   ```
-  
+
 - build: build 항목에 정의된 도커파일에서 이미지를 빌드해 서비스의 컨테이너를 생성하도록 설정한다. 도커파일에 사용될 컨텍스트나 도커파일의 이름, 도커파일에서 사용될 인자 값을 설정할 수 있다. image 항목을 설정하지 않으면 이미지의 이름은 [프로젝트이름]:[서비스의이름]이 된다.
 
   ```yaml
@@ -236,7 +238,7 @@ services:
       build: ./composetest
       image: composetest:web
   ```
-  
+
   ```yaml
   services:
     web:
@@ -247,14 +249,14 @@ services:
         HOST_NAME: web
         HOST_CONFIG: self_config
   ```
-  
+
   > build 항목을 YAML파일에 정의해 프로젝트 생성을 한 뒤에 도커파일을 변경하고 다시 프로젝트를 생성해도 이미지를 새로 빌드하지 않는다. `docker-compose up -d`에 `--build` 옵션을 추가하거나 `docker-compose build [yml 파일에서 빌드할 서비스 이름]`을 사용해 도커파일이 변경돼도 컨테이너를 생성할 때마다 빌드하도록 설정할 수 있다.
-  
+
 - extends: 다른 YAML 파일이나 현재 YAML 파일에서 서비스 속성을 상속받게 설정한다. 다음 예시를 든다.
 
   ```yaml
   # docker-compose.yml
-  
+
   version: '3.0'
     services:
       web:
@@ -265,7 +267,7 @@ services:
 
   ```yaml
   # extend_compose.yml
-  
+
   version: '3.0'
     services:
       extend_web:
