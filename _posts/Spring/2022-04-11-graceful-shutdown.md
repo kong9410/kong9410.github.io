@@ -243,6 +243,15 @@ curl : 원격 서버에 연결할 수 없습니다.
 
 
 
+## 결론
+
+- 스프링 애플리케이션 종료시에는 `kill -SIGKILL <pid>`와 같은 강제 종료보다는 `kill -SIGTERM <pid>`와 같은 정상 종료를 권장한다.
+- JVM 종료시에 ShutdownHook으로 등록된 메소드가 실행되어 종료 프로세스를 시작한다.
+- SpringBoot 2.3버전 이상에서는 `server.shutdown=graceful` property 설정으로 더 이상의 요청을 받지않고 현재 진행중이던 요청을 안전하게 처리할 수 있다.
+- SpringBoot 2.3이하에서는 Shutdown을 구현하여 종료 프로세스를 만들 수 있다.
+
+
+
 ## 참고
 
 [Linux kill Command Tutorial for Beginners (5 Examples) (howtoforge.com)](https://www.howtoforge.com/linux-kill-command/)
