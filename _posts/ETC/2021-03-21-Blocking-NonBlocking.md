@@ -1,6 +1,7 @@
 ---
 title: 블로킹(Blocking)과 논블로킹(NonBlocking) 그리고 동기(Synchronous)와 비동기(Asynchronous)
 tags: network
+layout: post
 ---
 
 처음 블로킹(Blocking)과 논블로킹(NonBlocking)이라는 것을 들었을 때 동기(Synchronous), 비동기(Asynchronous)와 무슨 차이가 있는지를 잘 이해하지 못하였다. 알고보니 내가 알고있던 동기, 비동기가 블로킹과 논블로킹의 개념이 약간 섞여있던 것이다. 좀 더 자세히 둘을 분해해보자.
